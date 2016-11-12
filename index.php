@@ -1,3 +1,12 @@
+<?php
+/*
+    This file should display the fileboard. Display a demo if no one is logged in, and the default
+    if someone is.
+
+    Use AJAX in JS to grab data from the api.php file.
+*/
+?>
+
 <!DOCTYPE html>
 <html>
     <head>

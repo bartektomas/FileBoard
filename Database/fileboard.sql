@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2016 at 08:02 PM
+-- Generation Time: Nov 12, 2016 at 11:02 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -49,7 +49,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `email`, `password`) VALUES
-(3, 'test@test.com', 'testtest');
+(3, 'test@test.com', 'pass');
 
 --
 -- Indexes for dumped tables

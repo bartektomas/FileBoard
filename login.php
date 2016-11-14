@@ -45,19 +45,61 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
     <head>
         <meta charset="utf-8">
         <title>Login - Fileboard</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="login style.css">
+
+        
     </head>
     <body>
         <div class="container">
-            <form class = "form-signin" role = "form" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post">
-                <h4 class = "form-signin-heading"><?php echo $msg; ?></h4>
-                <input type = "text" class = "form-control"
-                    name = "email" placeholder = "test@test.com"
-                    required autofocus></br>
-                <input type = "password" class = "form-control"
-                    name = "password" placeholder = "pass" required>
-                <button class = "btn btn-lg btn-primary btn-block" type = "submit"
-                    name = "login">Login</button>
-           </form>
+            <div class="row">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10">
+                    <form class = "form-signin" role = "form" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post">
+                    <h1 class = "text-center">
+                        Sign in to Fileboard
+                    </h1>
+                    <div class="row">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10"> 
+                            <h4 class = "form-signin-heading"><?php echo $msg; ?></h4>
+                            <input type = "text" class = "form-control"
+                                    name = "email" placeholder = "Email"
+                                    required autofocus>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10"> 
+                            <input type = "password" class = "form-control"
+                                name = "password" placeholder = "Password" required>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                                       
+                    </br>
+                    <div class="row">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-10">                     
+                            <button class = "btn btn-lg btn-primary btn-block" type = "submit"
+                                name = "login" id = "login-button">Login</button>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                        <div class="col-sm-1">
+                </div>
+            </div>
         </div>
     </body>
 </html>

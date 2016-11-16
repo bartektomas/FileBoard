@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	var canvas = new fabric.Canvas('canvas');
 	
-	canvas.backgroundColor = new fabric.Pattern({source: "grid_1.png"});
+	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+		canvas.renderAll();
+	});
 	
 	var rect = new fabric.Rect({
 		top : 500,

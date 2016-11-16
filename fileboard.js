@@ -41,7 +41,7 @@ $(document).ready(function() {
 	//$(window).resize(resizeCanvas); //TODO: debounce this
 	
 	//pencil
-	$("button").on("click", function() {
+	$("#pencil").on("click", function() {
 		if (canvas.isDrawingMode) {
 			canvas.isDrawingMode = false;
 			$("#pencil").addClass("btn-default");

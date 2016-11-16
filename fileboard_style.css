@@ -1,0 +1,29 @@
+#canvas-div {
+	position: absolute;
+	overflow: auto;
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+	z-index: 1
+}
+
+#header {
+	left: 2em;
+	right: 2em;
+	top: 2em;
+	position: fixed;
+	z-index: 2
+}
+
+#footer {
+	left: 2em;
+	right: 2em;
+	bottom: 2em;
+	position: fixed;
+	z-index: 2
+}
+
+.well {
+	background-color: black;
+	border: black;
+}

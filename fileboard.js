@@ -1,8 +1,5 @@
 $(document).ready(function() {
 	var canvas = new fabric.Canvas('canvas');
-	canvas.setWidth(500);
-	canvas.setHeight(500);
-	//canvas.isDrawingMode = true;
 	
 	canvas.backgroundColor = new fabric.Pattern({source: "grid_1.png"});
 	
@@ -42,6 +39,19 @@ $(document).ready(function() {
 	
 	// resize the canvas to fill browser window dynamically
 	//$(window).resize(resizeCanvas); //TODO: debounce this
+	
+	$("button").on("click", function() {
+		if (canvas.isDrawingMode) {
+			canvas.isDrawingMode = false;
+			$("#pencil").addClass("btn-default");
+			$("#pencil").removeClass("btn-primary");
+			}
+		else {
+			canvas.isDrawingMode = true;
+			$("#pencil").removeClass("btn-default");
+			$("#pencil").addClass("btn-primary");
+		}
+	});
 	
 	function resizeCanvas() {
 	canvas.setHeight(window.innerHeight);

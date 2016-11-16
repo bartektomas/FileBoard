@@ -9,7 +9,7 @@
 
 #header {
 	background-color: rgb(0,200,150);
-	border: rgb(0,200,150);
+	border-color: rgb(0,200,150);
 	
 	left: 2em;
 	right: 2em;
@@ -18,13 +18,9 @@
 	z-index: 2
 }
 
-h1 {
-	color: white;
-}
-
 #footer {
 	background-color: rgb(0,200,150);
-	border: rgb(0,200,150);
+	border-color: rgb(0,200,150);
 	
 	left: 2em;
 	right: 2em;

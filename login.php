@@ -17,12 +17,7 @@ require_once 'database.php';
 
 $msg = '';
 
-// code to logout if set in GET params...but instead logging out automatically on page load
-/*
-if (isset($_GET['logout']) && $_GET['logout']) {
-    session_destroy();
-}
-*/
+
 // check login info if posted
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
     foreach ($conn->query("SELECT * FROM users") as $row) {

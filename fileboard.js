@@ -40,6 +40,7 @@ $(document).ready(function() {
 	// resize the canvas to fill browser window dynamically
 	//$(window).resize(resizeCanvas); //TODO: debounce this
 	
+	//pencil
 	$("button").on("click", function() {
 		if (canvas.isDrawingMode) {
 			canvas.isDrawingMode = false;
@@ -52,6 +53,13 @@ $(document).ready(function() {
 			$("#pencil").addClass("btn-primary");
 		}
 	});
+	
+	//deleting
+	$("html").keyup(function(e) {
+		if(e.keyCode == 8 || e.keyCode == 46) {
+			canvas.remove(canvas.getActiveObject());
+		}
+	});  
 	
 	function resizeCanvas() {
 	canvas.setHeight(window.innerHeight);

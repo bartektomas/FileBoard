@@ -17,19 +17,14 @@ require_once 'database.php';
 
 $msg = '';
 
-// code to logout if set in GET params...but instead logging out automatically on page load
-/*
-if (isset($_GET['logout']) && $_GET['logout']) {
-    session_destroy();
-}
-*/
+
 // check login info if posted
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
     foreach ($conn->query("SELECT * FROM users") as $row) {
         if ($row['email'] === $_POST['email'] && $row['password'] === $_POST['password']) {
             $_SESSION['valid'] = true;
             $_SESSION['userid'] = $row['userid'];
-            header('Location: fileboard.html');
+            header('Location: fileboard.php');
             break;
         }
     }
@@ -61,7 +56,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
                     <div class="row">
                         <div class="col-sm-1">
                         </div>
-                        <div class="col-sm-10"> 
+                        <div class="col-sm-10">
                             <h4 class = "form-signin-heading"><?php echo $msg; ?></h4>
                             <input type = "text" class = "form-control"
                                     name = "email" placeholder = "Email"
@@ -74,19 +69,19 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
                     <div class="row">
                         <div class="col-sm-1">
                         </div>
-                        <div class="col-sm-10"> 
+                        <div class="col-sm-10">
                             <input type = "password" class = "form-control"
                                 name = "password" placeholder = "Password" required>
                         </div>
                         <div class="col-sm-1">
                         </div>
                     </div>
-                                       
+
                     </br>
                     <div class="row">
                         <div class="col-sm-1">
                         </div>
-                        <div class="col-sm-10">                     
+                        <div class="col-sm-10">
                             <button class = "btn btn-lg btn-primary btn-block" type = "submit"
                                 name = "login" id = "login-button">Login</button>
                         </div>

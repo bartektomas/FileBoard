@@ -9,7 +9,7 @@
 	<link href="fileboard_style.css" rel="stylesheet">
 </head>
 <body>
-	<div id="header" class="well well-sm">
+	<div id="header-div" class="well well-sm">
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -29,8 +29,7 @@
 				</div>
 			</div>
 		</nav>
-		<button type="button" class="btn btn-default">Tab 1</button>
-		<button type="button" class="btn btn-default">Tab 2</button>
+		<button type="button" class="btn btn-default">Notes</button>
 		<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
 	</div>
 	
@@ -38,9 +37,9 @@
 		<canvas id="canvas"></canvas>
 	</div>
 	
-	<div id="footer" class="well well-sm">
+	<div id="footer-div" class="well well-sm">
 		<button id="pencil" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Pencil</button>
-		<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-text-color"></span> Text</button>
+		<button id="text" type="button" class="btn btn-default"><span class="glyphicon glyphicon-font"></span> Text</button>
 		<button type="button" class="btn btn-default">Tool 3</button>
 		<button type="button" class="btn btn-default">Tool 4</button>
 		<button type="button" class="btn btn-default">Tool 5</button>

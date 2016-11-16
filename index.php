@@ -5,6 +5,8 @@
 
     Use AJAX in JS to grab data from the api.php file.
 */
+
+header('Location: fileboard.php');
 ?>
 
 <!DOCTYPE html>

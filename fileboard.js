@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	var canvas = new fabric.Canvas('canvas');
 	
-	canvas.backgroundColor = new fabric.Pattern({source: "grid_1.png"});
+	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+		canvas.renderAll();
+	});
 	
 	var rect = new fabric.Rect({
 		top : 500,
@@ -41,7 +43,7 @@ $(document).ready(function() {
 	//$(window).resize(resizeCanvas); //TODO: debounce this
 	
 	//pencil
-	$("button").on("click", function() {
+	$("#pencil").on("click", function() {
 		if (canvas.isDrawingMode) {
 			canvas.isDrawingMode = false;
 			$("#pencil").addClass("btn-default");

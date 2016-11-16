@@ -4,11 +4,11 @@ $(document).ready(function() {
 	canvas.setHeight(500);
 	//canvas.isDrawingMode = true;
 	
-	canvas.backgroundColor = new fabric.Pattern({source: "http://www.paralelo8.com.br/pixel/grids/grid_1.png"});
+	canvas.backgroundColor = new fabric.Pattern({source: "grid_1.png"});
 	
 	var rect = new fabric.Rect({
-		top : 100,
-		left : 100,
+		top : 500,
+		left : 500,
 		width : 50,
 		height : 50,
 		fill : 'red',

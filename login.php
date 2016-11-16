@@ -29,7 +29,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
         if ($row['email'] === $_POST['email'] && $row['password'] === $_POST['password']) {
             $_SESSION['valid'] = true;
             $_SESSION['userid'] = $row['userid'];
-            header('Location: index.php');
+            header('Location: fileboard.html');
             break;
         }
     }
@@ -47,8 +47,6 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
         <title>Login - Fileboard</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="login_style.css">
-
-        
     </head>
     <body>
         <div class="container">

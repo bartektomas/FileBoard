@@ -1,3 +1,10 @@
+<?php
+if (isset($_POST['login'])) {
+        $_SESSION['valid'] = true;
+        header('Location: fileboard.html');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +21,7 @@
             <div class="col-sm-1">
             </div>
             <div class="col-sm-10">
-                <form class = "form-create-account" action="PLACEHOLDER" method="get">
+                <form class = "form-create-account" role="form" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                     <h1 class = "text-center">
                         Sign up for Fileboard
                     </h1>

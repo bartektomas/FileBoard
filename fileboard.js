@@ -1,10 +1,17 @@
+function saveCanvas(canvas) {
+	var data = {"action" : "save", "data" : JSON.stringify(canvas)};
+	$.post('api.php', data, function (d) {
+		console.log(d);
+	});
+}
+
 $(document).ready(function() {
 	var canvas = new fabric.Canvas('canvas');
-	
+
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
 	});
-	
+
 	var rect = new fabric.Rect({
 		top : 500,
 		left : 500,
@@ -13,11 +20,11 @@ $(document).ready(function() {
 		fill : 'red',
 		strokeWidth : 0
 	});
-	
+
 	canvas.add(rect);
-	
+
 	canvas.renderAll();
-	
+
 	canvas.on("object:moving", function(e) {
 		var currentCanvasHeight = canvas.height;
 		var currentCanvasWidth = canvas.width;
@@ -37,11 +44,11 @@ $(document).ready(function() {
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
 	});
-	
-	
+
+
 	// resize the canvas to fill browser window dynamically
 	//$(window).resize(resizeCanvas); //TODO: debounce this
-	
+
 	//pencil
 	$("#pencil").on("click", function() {
 		if (canvas.isDrawingMode) {
@@ -55,19 +62,19 @@ $(document).ready(function() {
 			$("#pencil").addClass("btn-primary");
 		}
 	});
-	
+
 	//deleting
 	$("html").keyup(function(e) {
 		if(e.keyCode == 8 || e.keyCode == 46) {
 			canvas.remove(canvas.getActiveObject());
 		}
-	});  
-	
+	});
+
 	function resizeCanvas() {
 	canvas.setHeight(window.innerHeight);
 	canvas.setWidth(window.innerWidth);
 	canvas.renderAll();
 	}
-	
+
 	resizeCanvas(); //init
 });

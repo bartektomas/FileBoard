@@ -32,7 +32,7 @@ if (isset($_POST['createaccount'])) {
                         header('Location: fileboard.php');
                     }
                     else {
-                        $msg = "Database error.";
+                        $msg = "Database error: email already used.";
                     }
                 } else {
                     $msg = "Your usernames or passwords do not match.";

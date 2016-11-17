@@ -83,6 +83,7 @@ var mode = 0;
 //mode 0: none (edit)
 //mode 1: pencil
 //mode 2: text
+//mode 3: shapes
 
 $(document).ready(function() {
 	// create new fileboard on tab click
@@ -135,6 +136,11 @@ $(document).ready(function() {
 			$("#text").addClass("btn-default");
 			$("#text").removeClass("btn-primary");
 		}
+		else if (mode == 3) {
+			$("#shapes").addClass("btn-default");
+			$("#shapes").removeClass("btn-primary");
+			$("#shapes").popover("hide");
+		}
 
 		mode = newMode;
 
@@ -150,6 +156,11 @@ $(document).ready(function() {
 		else if (mode == 2) {
 			$("#text").removeClass("btn-default");
 			$("#text").addClass("btn-primary");
+		}
+		else if (mode == 3) {
+			$("#shapes").removeClass("btn-default");
+			$("#shapes").addClass("btn-primary");
+			$("#shapes").popover("show");
 		}
 	}
 
@@ -170,6 +181,16 @@ $(document).ready(function() {
 		}
 		else {
 			modeSwitch(2);
+		}
+	});
+	
+	//shapes button
+	$("#shapes").on("click", function() {
+		if (mode == 3) {
+			modeSwitch(0);
+		}
+		else {
+			modeSwitch(3);
 		}
 	});
 
@@ -211,6 +232,39 @@ $(document).ready(function() {
 			canvas.setActiveObject(iText);
 			iText.enterEditing();
 		}
+		else if (mode == 3) {
+			var selected = $("#shape-form input[type='radio']:checked").val();
+			
+			if (selected == 1) { //rectangle
+				var shape = new fabric.Rect({
+					top : options.e.clientY,
+					left : options.e.clientX,
+					width : 50,
+					height : 50,
+					strokeWidth : 0
+				});
+				canvas.add(shape);
+			}
+			else if (selected == 2) { //circle
+				var shape = new fabric.Circle({
+					top : options.e.clientY,
+					left : options.e.clientX,
+					radius : 25,
+					strokeWidth : 0
+				});
+				canvas.add(shape);
+			}
+			else if (selected == 3) { //triangle
+				var shape = new fabric.Triangle({
+					top : options.e.clientY,
+					left : options.e.clientX,
+					width : 50,
+					height : 50,
+					strokeWidth : 0
+				});
+				canvas.add(shape);
+			}
+		}
 	});
 
 	//initialize canvas to window size
@@ -218,4 +272,18 @@ $(document).ready(function() {
 	canvas.setWidth(window.innerWidth);
 	canvas.renderAll();
 
+	$("#shapes").popover();
+	$("#shapes").attr("data-content", '\
+	<form id="shape-form">\
+	<div class="radio">\
+		<label><input type="radio" name="optradio" value="1">Rectangle</label>\
+	</div>\
+	<div class="radio">\
+		<label><input type="radio" name="optradio" value="2">Circle</label>\
+	</div>\
+	<div class="radio">\
+		<label><input type="radio" name="optradio" value="3">Triangle</label>\
+	</div>\
+	</form>\
+	');
 });

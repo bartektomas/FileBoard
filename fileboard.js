@@ -33,11 +33,6 @@ $(document).ready(function() {
 			$("canvas-div").scrollLeft(e.target.left);
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
-		if (e.target.left < 0) {
-			canvas.setWidth(currentCanvasWidth+50);
-			$("canvas-div").scrollLeft(e.target.left);
-			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
-		}
 		if (e.target.top + e.target.height * e.target.scaleY > currentCanvasHeight) {
 			canvas.setHeight(currentCanvasHeight+50);
 			$("canvas-div").scrollTop(e.target.top);
@@ -62,19 +57,37 @@ $(document).ready(function() {
 			$("#pencil").addClass("btn-primary");
 		}
 	});
+	
+	$("#text").on("click", function() {
+		var iText = new fabric.IText("hi",{
+			top : 500,
+			left : 500,
+			width : 50,
+			height : 50,
+			strokeWidth : 0
+		});
+		canvas.add(iText);
+	});
 
 	//deleting
 	$("html").keyup(function(e) {
 		if(e.keyCode == 8 || e.keyCode == 46) {
-			canvas.remove(canvas.getActiveObject());
+			if (canvas.getActiveObject() instanceof fabric.IText) {
+				if (canvas.getActiveObject().isEditing) {
+					//do nothing
+				}
+				else {
+					canvas.remove(canvas.getActiveObject());
+				}
+			}
+			else {
+				canvas.remove(canvas.getActiveObject());
+			}
 		}
 	});
 
-	function resizeCanvas() {
+	//initialize canvas to window size
 	canvas.setHeight(window.innerHeight);
 	canvas.setWidth(window.innerWidth);
 	canvas.renderAll();
-	}
-
-	resizeCanvas(); //init
 });

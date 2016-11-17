@@ -5,26 +5,20 @@ function saveCanvas(canvas) {
 	});
 }
 
+var mode = 0;
+//mode 0: none (edit)
+//mode 1: pencil
+//mode 2: text
+
 $(document).ready(function() {
 	var canvas = new fabric.Canvas('canvas');
 
+	//grid background
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
 	});
 
-	var rect = new fabric.Rect({
-		top : 500,
-		left : 500,
-		width : 50,
-		height : 50,
-		fill : 'red',
-		strokeWidth : 0
-	});
-
-	canvas.add(rect);
-
-	canvas.renderAll();
-
+	//rudimentary scaling when an object moves past right/bottom edges
 	canvas.on("object:moving", function(e) {
 		var currentCanvasHeight = canvas.height;
 		var currentCanvasWidth = canvas.width;
@@ -39,37 +33,60 @@ $(document).ready(function() {
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
 	});
-
-
-	// resize the canvas to fill browser window dynamically
-	//$(window).resize(resizeCanvas); //TODO: debounce this
-
-	//pencil
-	$("#pencil").on("click", function() {
-		if (canvas.isDrawingMode) {
+	
+	function modeSwitch(newMode) {
+		//handle exiting whatever mode we were in
+		if (mode == 0) {
+			
+		}
+		else if (mode == 1) {
 			canvas.isDrawingMode = false;
 			$("#pencil").addClass("btn-default");
 			$("#pencil").removeClass("btn-primary");
-			}
-		else {
+		}
+		else if (mode == 2) {
+			$("#text").addClass("btn-default");
+			$("#text").removeClass("btn-primary");
+		}
+		
+		mode = newMode;
+		
+		//enter new mode
+		if (mode == 0) {
+			
+		}
+		else if (mode == 1) {
 			canvas.isDrawingMode = true;
 			$("#pencil").removeClass("btn-default");
 			$("#pencil").addClass("btn-primary");
 		}
+		else if (mode == 2) {
+			$("#text").removeClass("btn-default");
+			$("#text").addClass("btn-primary");
+		}
+	}
+	
+	//pencil button
+	$("#pencil").on("click", function() {
+		if (mode == 1) {
+			modeSwitch(0);
+		}
+		else {
+			modeSwitch(1);
+		}
 	});
 	
+	//text button
 	$("#text").on("click", function() {
-		var iText = new fabric.IText("hi",{
-			top : 500,
-			left : 500,
-			width : 50,
-			height : 50,
-			strokeWidth : 0
-		});
-		canvas.add(iText);
+		if (mode == 2) {
+			modeSwitch(0);
+		}
+		else {
+			modeSwitch(2);
+		}
 	});
 
-	//deleting
+	//deleting fabric objects
 	$("html").keyup(function(e) {
 		if(e.keyCode == 8 || e.keyCode == 46) {
 			if (canvas.getActiveObject() instanceof fabric.IText) {
@@ -83,6 +100,29 @@ $(document).ready(function() {
 			else {
 				canvas.remove(canvas.getActiveObject());
 			}
+		}
+	});
+	
+	canvas.on("mouse:down", function(options) {
+		if(mode == 0) {
+			
+		}
+		else if (mode == 1) {
+			
+		}
+		else if (mode == 2) {
+			modeSwitch(0);
+			var iText = new fabric.IText("",{
+				top : options.e.clientY,
+				left : options.e.clientX,
+				width : 50,
+				height : 50,
+				strokeWidth : 0
+			});
+			iText.lockUniScaling = true;
+			canvas.add(iText);
+			canvas.setActiveObject(iText);
+			iText.enterEditing();
 		}
 	});
 

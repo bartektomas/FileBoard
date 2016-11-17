@@ -11,12 +11,39 @@ require_once "database.php";
 session_start();
 
 if ($_SESSION["valid"]) {
-    if ($_POST["action"] === "save") {
-        $stmt = $conn->prepare("INSERT INTO `fileboards` (`userid`, `data`) VALUES (?, ?) ON DUPLICATE KEY UPDATE data=?");
-        if ($stmt->execute( array($_SESSION['userid'], $_POST['data'], $_POST['data']) )) {
-            return 1;
+    if ($_POST["action"] === "saveNew") {
+        $stmt = $conn->prepare("INSERT INTO `fileboards` (`userid`, `name`, `data`) VALUES (?, ?, ?)");
+        if ($stmt->execute( array($_SESSION['userid'], $_POST['name'], $_POST['data']) )) {
+            echo 1;
         } else {
-            return 0;
+            echo 0;
+        }
+    }
+
+    if ($_POST["action"] === "save") {
+        $stmt = $conn->prepare("UPDATE `fileboards` SET `name` = ?, `data` = ? WHERE `fileboards`.`id` = ? and `fileboards`.`userid` = ?");
+        if ($stmt->execute( array($_POST['name'], $_POST['data'], $_POST['fileboardID'], $_SESSION['userid']) )) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
+    if ($_POST["action"] === "getFileboards") {
+        $stmt = $conn->prepare("SELECT id, name FROM `fileboards` WHERE userid = ?");
+        if ($stmt->execute( array($_SESSION['userid']) )) {
+            echo json_encode($stmt->fetchAll());
+        } else {
+            echo 0;
+        }
+    }
+
+    if ($_POST["action"] === "loadFileboard") {
+        $stmt = $conn->prepare("SELECT * FROM `fileboards` WHERE userid = ? and id = ?");
+        if ($stmt->execute( array($_SESSION['userid'], $_POST['fileboardID']) )) {
+            echo json_encode($stmt->fetch());
+        } else {
+            echo 0;
         }
     }
 }

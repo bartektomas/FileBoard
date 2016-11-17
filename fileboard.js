@@ -1,12 +1,58 @@
-function saveCanvas(canvas) {
-	var data = {"action" : "save", "data" : JSON.stringify(canvas)};
+var canvas;
+var fileboardID = null;
+var fileboardName = "";
+
+function saveFileboard() {
+	if (fileboardID) {
+		// save
+		var data = {"action" : "save", "fileboardID" : fileboardID, "name" : fileboardName, "data" : JSON.stringify(canvas)};
+	} else {
+		// create new
+		var data = {"action" : "saveNew", "name" : fileboardName, "data" : JSON.stringify(canvas)};
+	}
+
 	$.post('api.php', data, function (d) {
 		console.log(d);
 	});
 }
 
+function getFileboards() {
+	var data = {"action" : "getFileboards"};
+	$.post('api.php', data, function (d) {
+		console.log(d);
+		var json = JSON.parse(d);
+		for (var i = 0; i < json.length; i++) {
+			(function (json, i) {
+				var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html(json[i]["name"]).insertBefore('#fileboardAdd');
+				button.click(function(event) {
+					fileboardID = json[i]["id"];
+					fileboardName = json[i]["name"];
+					loadFileboard();
+				});
+			})(json, i)
+		}
+	});
+}
+
+function loadFileboard() {
+	var data = {"action" : "loadFileboard", "fileboardID" : fileboardID};
+	$.post('api.php', data, function (d) {
+		console.log(d);
+		var json = JSON.parse(d);
+		canvas.loadFromJSON(json);
+	});
+}
+
 $(document).ready(function() {
-	var canvas = new fabric.Canvas('canvas');
+	// create new fileboard on tab click
+	$('#fileboardAdd').click(function(event) {
+		var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html("New").insertBefore('#fileboardAdd');
+		fileboardID = null;
+		fileboardName = "New";
+		saveFileboard();
+	});
+
+	canvas = new fabric.Canvas('canvas');
 
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
@@ -57,7 +103,7 @@ $(document).ready(function() {
 			$("#pencil").addClass("btn-primary");
 		}
 	});
-	
+
 	$("#text").on("click", function() {
 		var iText = new fabric.IText("hi",{
 			top : 500,
@@ -90,4 +136,6 @@ $(document).ready(function() {
 	canvas.setHeight(window.innerHeight);
 	canvas.setWidth(window.innerWidth);
 	canvas.renderAll();
+
+	getFileboards();
 });

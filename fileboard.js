@@ -1,22 +1,33 @@
 var canvas;
 var fileboardID = null;
 var fileboardName = "";
+var numBoards = 0;
 
 function saveFileboard() {
 	if (!loggedIn) {
 		return;
 	}
 
-	if (fileboardID) {
+	if (fileboardID && fileboardName) {
 		// save
 		var data = {"action" : "save", "fileboardID" : fileboardID, "name" : fileboardName, "data" : JSON.stringify(canvas)};
-	} else {
-		// create new
-		var data = {"action" : "saveNew", "name" : fileboardName, "data" : JSON.stringify(canvas)};
 	}
 
 	$.post('api.php', data, function (d) {
 		console.log(d);
+	});
+}
+
+function saveNewFileboard(name) {
+	if (!loggedIn) {
+		return;
+	}
+
+	var data = {"action" : "saveNew", "name" : name, "data" : JSON.stringify(canvas)};
+
+	$.post('api.php', data, function (d) {
+		console.log(d);
+		getFileboards();
 	});
 }
 
@@ -28,17 +39,26 @@ function getFileboards() {
 	var data = {"action" : "getFileboards"};
 	$.post('api.php', data, function (d) {
 		console.log(d);
+		$(".btn-fileboard").remove();
 		var json = JSON.parse(d);
+		numBoards = json.length;
 		for (var i = 0; i < json.length; i++) {
 			(function (json, i) {
 				var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html(json[i]["name"]).insertBefore('#fileboardAdd');
 				button.click(function(event) {
+					saveFileboard();
 					$(".btn-fileboard").removeClass("btn-primary");
 					button.addClass("btn-primary");
 					fileboardID = json[i]["id"];
 					fileboardName = json[i]["name"];
 					loadFileboard();
 				});
+				if (i === json.length - 1) {
+					button.addClass("btn-primary");
+					fileboardID = json[i]["id"];
+					fileboardName = json[i]["name"];
+					loadFileboard();
+				}
 			})(json, i)
 		}
 	});
@@ -48,7 +68,7 @@ function loadFileboard() {
 	if (!loggedIn) {
 		return;
 	}
-	
+
 	var data = {"action" : "loadFileboard", "fileboardID" : fileboardID};
 	$.post('api.php', data, function (d) {
 		var json = JSON.parse(d);
@@ -67,10 +87,11 @@ var mode = 0;
 $(document).ready(function() {
 	// create new fileboard on tab click
 	$('#fileboardAdd').click(function(event) {
-		var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html("New").insertBefore('#fileboardAdd');
-		fileboardID = null;
-		fileboardName = "New";
-		saveFileboard();
+		canvas.clear();
+		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+			canvas.renderAll();
+		});
+		saveNewFileboard("Board " + String(numBoards+1));
 	});
 
 	$('#btn-save').click(saveFileboard);
@@ -99,11 +120,11 @@ $(document).ready(function() {
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
 	});
-	
+
 	function modeSwitch(newMode) {
 		//handle exiting whatever mode we were in
 		if (mode == 0) {
-			
+
 		}
 		else if (mode == 1) {
 			canvas.isDrawingMode = false;
@@ -114,12 +135,12 @@ $(document).ready(function() {
 			$("#text").addClass("btn-default");
 			$("#text").removeClass("btn-primary");
 		}
-		
+
 		mode = newMode;
-		
+
 		//enter new mode
 		if (mode == 0) {
-			
+
 		}
 		else if (mode == 1) {
 			canvas.isDrawingMode = true;
@@ -131,7 +152,7 @@ $(document).ready(function() {
 			$("#text").addClass("btn-primary");
 		}
 	}
-	
+
 	//pencil button
 	$("#pencil").on("click", function() {
 		if (mode == 1) {
@@ -141,7 +162,7 @@ $(document).ready(function() {
 			modeSwitch(1);
 		}
 	});
-	
+
 	//text button
 	$("#text").on("click", function() {
 		if (mode == 2) {
@@ -168,13 +189,13 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
+
 	canvas.on("mouse:down", function(options) {
 		if(mode == 0) {
-			
+
 		}
 		else if (mode == 1) {
-			
+
 		}
 		else if (mode == 2) {
 			modeSwitch(0);

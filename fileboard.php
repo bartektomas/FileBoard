@@ -36,7 +36,12 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">
-						<li><a href="#" id="btn-save">Save</a></li>
+						<?php
+							if (isset($_SESSION["valid"])) {
+								echo '<li><a href="#" id="btn-save">Save</a></li>';
+								//echo '<li><a href="#" id="btn-rename">Rename</a></li>';
+							}
+						?>
 					</ul>
 					<!--<a class="navbar-right navbar-brand" href="#">Something Completely Different</a> -->
 					<?php
@@ -70,13 +75,6 @@
 	<div id="footer-div" class="well well-sm">
 		<button id="pencil" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Pencil</button>
 		<button id="text" type="button" class="btn btn-default"><span class="glyphicon glyphicon-font"></span> Text</button>
-		<button type="button" class="btn btn-default">Tool 3</button>
-		<button type="button" class="btn btn-default">Tool 4</button>
-		<button type="button" class="btn btn-default">Tool 5</button>
-		<button type="button" class="btn btn-default">Tool 6</button>
-		<button type="button" class="btn btn-default">Tool 7</button>
-		<button type="button" class="btn btn-default">Tool 8</button>
-		<button type="button" class="btn btn-default">Tool 9</button>
 	</div>
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.min.js" type="text/javascript"></script>

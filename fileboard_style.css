@@ -32,3 +32,11 @@
  .btn-fileboard {
 	 margin-right: 5px;
  }
+
+.navbar-brand {
+	color: white !important;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+}

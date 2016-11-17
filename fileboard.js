@@ -3,6 +3,10 @@ var fileboardID = null;
 var fileboardName = "";
 
 function saveFileboard() {
+	if (!loggedIn) {
+		return;
+	}
+
 	if (fileboardID) {
 		// save
 		var data = {"action" : "save", "fileboardID" : fileboardID, "name" : fileboardName, "data" : JSON.stringify(canvas)};
@@ -17,6 +21,10 @@ function saveFileboard() {
 }
 
 function getFileboards() {
+	if (!loggedIn) {
+		return;
+	}
+
 	var data = {"action" : "getFileboards"};
 	$.post('api.php', data, function (d) {
 		console.log(d);
@@ -25,6 +33,8 @@ function getFileboards() {
 			(function (json, i) {
 				var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html(json[i]["name"]).insertBefore('#fileboardAdd');
 				button.click(function(event) {
+					$(".btn-fileboard").removeClass("btn-primary");
+					button.addClass("btn-primary");
 					fileboardID = json[i]["id"];
 					fileboardName = json[i]["name"];
 					loadFileboard();
@@ -35,11 +45,17 @@ function getFileboards() {
 }
 
 function loadFileboard() {
+	if (!loggedIn) {
+		return;
+	}
+	
 	var data = {"action" : "loadFileboard", "fileboardID" : fileboardID};
 	$.post('api.php', data, function (d) {
-		console.log(d);
 		var json = JSON.parse(d);
-		canvas.loadFromJSON(json);
+		canvas.loadFromJSON(json["data"]);
+		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+			canvas.renderAll();
+		});
 	});
 }
 
@@ -56,6 +72,10 @@ $(document).ready(function() {
 		fileboardName = "New";
 		saveFileboard();
 	});
+
+	$('#btn-save').click(saveFileboard);
+
+	if(loggedIn) getFileboards();
 
 	canvas = new fabric.Canvas('canvas');
 
@@ -177,5 +197,4 @@ $(document).ready(function() {
 	canvas.setWidth(window.innerWidth);
 	canvas.renderAll();
 
-	getFileboards();
 });

@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,6 +10,15 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="http://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<?php
+		if (isset($_SESSION["valid"]) && $_SESSION["valid"]) {
+			echo '<script type="text/javascript">var loggedIn = true;</script>';
+		} else {
+			echo '<script type="text/javascript">var loggedIn = false;</script>';
+		}
+
+	 ?>
 
 	<link href="fileboard_style.css" rel="stylesheet">
 </head>
@@ -23,14 +36,31 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Something</a></li>
-						<li><a href="#">Something Else</a></li>
+						<li><a href="#" id="btn-save">Save</a></li>
 					</ul>
-					<a class="navbar-right navbar-brand" href="#">Something Completely Different</a>
+					<!--<a class="navbar-right navbar-brand" href="#">Something Completely Different</a> -->
+					<?php
+						if (isset($_SESSION["valid"])) {
+							echo '<a class="navbar-right navbar-brand" href="logout.php">Logout</a>';
+						} else {
+							echo '<a class="navbar-right navbar-brand" href="login.php">Login</a>';
+							echo '<a class="navbar-right navbar-brand" href="signup.php">Signup</a>';
+						}
+					?>
 				</div>
 			</div>
 		</nav>
-		<button type="button" id="fileboardAdd" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+
+		<?php
+			if (isset($_SESSION["valid"]) && $_SESSION["valid"]) {
+				echo '<button type="button" id="fileboardAdd" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>';
+			} else {
+				echo '<button type="button" class="btn btn-default">Demo</button>';
+			}
+
+		 ?>
+
+
 	</div>
 
 	<div id="canvas-div">

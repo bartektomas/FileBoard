@@ -61,7 +61,7 @@
 			if (isset($_SESSION["valid"]) && $_SESSION["valid"]) {
 				echo '<button type="button" id="fileboardAdd" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>';
 			} else {
-				echo '<button type="button" class="btn btn-default">Demo</button>';
+				echo '<button type="button" class="btn btn-default btn-primary">Demo</button>';
 			}
 
 		 ?>

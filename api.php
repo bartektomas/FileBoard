@@ -46,6 +46,26 @@ if ($_SESSION["valid"]) {
             echo 0;
         }
     }
+
+
+    if ($_POST["action"] === "deleteFileboard") {
+        $stmt = $conn->prepare("DELETE FROM `fileboards` WHERE `fileboards`.`userid` = ? AND `fileboards`.`id` = ?");
+        if ($stmt->execute( array($_SESSION['userid'], $_POST['fileboardID']) )) {
+            echo json_encode($stmt->fetch());
+        } else {
+            echo 0;
+        }
+    }
+
+    if ($_POST["action"] === "renameFileboard") {
+        $stmt = $conn->prepare("UPDATE `fileboards` SET `name` = ? WHERE `fileboards`.`id` = ? and `fileboards`.`userid` = ?");
+        if ($stmt->execute( array($_POST['name'], $_POST['fileboardID'], $_SESSION['userid']) )) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
 }
 
 

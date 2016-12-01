@@ -40,3 +40,7 @@
 .navbar-inverse .navbar-nav>li>a {
     color: white;
 }
+
+.fileboard-rename-field {
+	color: black;
+}

@@ -3,6 +3,15 @@ var fileboardID = null;
 var fileboardName = "";
 var numBoards = 0;
 
+function displayError() {
+	var text = 'Connection to server failed. Please check your internet connection.'
+	$(".alert-dismissible").remove();
+	var msg = $('<div role="alert">').addClass('alert alert-warning alert-dismissible')
+	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Warning!</strong> ' + text);
+
+	$('nav.navbar').after(msg);
+}
+
 function saveFileboard() {
 	if (!loggedIn) {
 		return;
@@ -22,6 +31,10 @@ function saveNewFileboard(name) {
 	if (!loggedIn) {
 		return;
 	}
+
+	fileboardID = null;
+	fileboardName = "";
+	$(".btn-fileboard").removeClass("btn-primary");
 
 	var data = {"action" : "saveNew", "name" : name, "data" : JSON.stringify(canvas)};
 
@@ -46,6 +59,9 @@ function getFileboards() {
 			(function (json, i) {
 				var button = $("<button></button>").addClass('btn btn-default btn-fileboard').html(json[i]["name"]).insertBefore('#fileboardAdd');
 				button.click(function(event) {
+					if (button.hasClass('btn-primary')) {
+						return;
+					}
 					saveFileboard();
 					$(".btn-fileboard").removeClass("btn-primary");
 					button.addClass("btn-primary");
@@ -53,7 +69,7 @@ function getFileboards() {
 					fileboardName = json[i]["name"];
 					loadFileboard();
 				});
-				if (i === json.length - 1) {
+				if (fileboardID === json[i]["id"] || (i === json.length - 1 && $(".btn-primary.btn-fileboard").length === 0) ) {
 					button.addClass("btn-primary");
 					fileboardID = json[i]["id"];
 					fileboardName = json[i]["name"];
@@ -61,7 +77,28 @@ function getFileboards() {
 				}
 			})(json, i)
 		}
-	});
+		if (numBoards == 0) {
+			saveNewFileboard("Board " + String(numBoards+1));
+		}
+	}).fail(displayError);
+}
+
+function deleteFileboard(idToDelete) {
+	if (!loggedIn) {
+		return;
+	}
+
+	var data = {"action" : "deleteFileboard", "fileboardID" : idToDelete};
+	$.post('api.php', data, getFileboards).fail(displayError);
+}
+
+function renameFileboard(idToRename, name) {
+	if (!loggedIn) {
+		return;
+	}
+
+	var data = {"action" : "renameFileboard", "fileboardID" : idToRename, "name" : name};
+	$.post('api.php', data, getFileboards).fail(displayError);
 }
 
 function loadFileboard() {
@@ -76,7 +113,7 @@ function loadFileboard() {
 		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 			canvas.renderAll();
 		});
-	});
+	}).fail(displayError);
 }
 
 var mode = 0;
@@ -88,6 +125,7 @@ var mode = 0;
 $(document).ready(function() {
 	// create new fileboard on tab click
 	$('#fileboardAdd').click(function(event) {
+		saveFileboard();
 		canvas.clear();
 		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 			canvas.renderAll();
@@ -96,6 +134,30 @@ $(document).ready(function() {
 	});
 
 	$('#btn-save').click(saveFileboard);
+
+	$('#btn-rename').click(function () {
+		var input = $('<input type="text" size="10">').addClass('fileboard-rename-field');
+		input.keyup(function(event) {
+			event.stopPropagation();
+			if (event.keyCode == 13) {
+				var name = input.val();
+				$(".btn-fileboard.btn-primary").first().html(name);
+				renameFileboard(fileboardID, name);
+			}
+			else if (event.keyCode == 27) {
+				$(".btn-fileboard.btn-primary").first().html(fileboardName);
+			}
+		});
+		input.focusout(function(event) {
+			$(".btn-fileboard.btn-primary").first().html(fileboardName);
+		});
+		$(".btn-fileboard.btn-primary").first().empty().append(input);
+		input.val(fileboardName).focus();
+	});
+
+	$('#btn-delete').click(function () {
+		deleteFileboard(fileboardID);
+	});
 
 	if(loggedIn) getFileboards();
 
@@ -183,7 +245,7 @@ $(document).ready(function() {
 			modeSwitch(2);
 		}
 	});
-	
+
 	//shapes button
 	$("#shapes").on("click", function() {
 		if (mode == 3) {
@@ -234,7 +296,7 @@ $(document).ready(function() {
 		}
 		else if (mode == 3) {
 			var selected = $("#shape-form input[type='radio']:checked").val();
-			
+
 			if (selected == 1) { //rectangle
 				var shape = new fabric.Rect({
 					top : options.e.clientY,

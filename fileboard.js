@@ -130,7 +130,7 @@ $(document).ready(function() {
 		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 			canvas.renderAll();
 		});
-		saveNewFileboard("Board " + String(numBoards+1));
+		saveNewFileboard("New Board");
 	});
 
 	$('#btn-save').click(saveFileboard);

@@ -48,6 +48,9 @@
 					<?php
 						if (isset($_SESSION["valid"])) {
 							echo '<a class="navbar-right navbar-brand" href="logout.php">Logout</a>';
+							if ($_SESSION["isAdmin"]) {
+								echo '<a class="navbar-right navbar-brand" href="admin.php">Admin Panel</a>';
+							}
 						} else {
 							echo '<a class="navbar-right navbar-brand" href="login.php">Login</a>';
 							echo '<a class="navbar-right navbar-brand" href="signup.php">Signup</a>';

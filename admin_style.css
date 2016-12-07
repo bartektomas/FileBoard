@@ -1,0 +1,19 @@
+
+
+
+h1
+{
+    color: rgb(0,200,150);
+}
+.btn
+{
+    background-color: rgb(0,200,150);
+}
+
+td, th {
+    padding: 5px;
+}
+
+#go-back {
+    margin: 15px 0px 15px 0px;
+}

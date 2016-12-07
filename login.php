@@ -24,6 +24,13 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
         if ($row['email'] === $_POST['email'] && $row['password'] === $_POST['password']) {
             $_SESSION['valid'] = true;
             $_SESSION['userid'] = $row['userid'];
+
+            if ($row['type'] === "admin") {
+                $_SESSION['isAdmin'] = true;
+            } else {
+                $_SESSION['isAdmin'] = false;
+            }
+
             header('Location: fileboard.php');
             break;
         }
@@ -39,7 +46,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Login - Fileboard</title>
+        <title>Login - FileBoard</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="login_style.css">
     </head>
@@ -51,7 +58,7 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
                 <div class="col-sm-10">
                     <form class = "form-signin" role = "form" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post">
                     <h1 class = "text-center">
-                        Sign in to Fileboard
+                        Sign in to FileBoard
                     </h1>
                     <div class="row">
                         <div class="col-sm-1">

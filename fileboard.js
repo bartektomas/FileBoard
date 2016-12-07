@@ -121,9 +121,7 @@ function loadFileboard() {
 	$.post('api.php', data, function (d) {
 		var json = JSON.parse(d);
 		canvas.loadFromJSON(json["data"]);
-		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
-			canvas.renderAll();
-		});
+		canvas.renderAll();
 	}).fail(displayError);
 }
 
@@ -138,9 +136,10 @@ $(document).ready(function() {
 	$('#fileboardAdd').click(function(event) {
 		saveFileboard();
 		canvas.clear();
-		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+		/*canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 			canvas.renderAll();
-		});
+		});*/
+		canvas.renderAll();
 		saveNewFileboard("New Board");
 	});
 
@@ -177,9 +176,10 @@ $(document).ready(function() {
 	canvas = new fabric.Canvas('canvas');
 
 	//grid background
-	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+	// Note from Jeremy: Made this a part of the body background instead. adjusts to window resizing better
+	/*canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
-	});
+	});*/
 
 	//rudimentary scaling when an object moves past right/bottom edges
 	canvas.on("object:moving", function(e) {

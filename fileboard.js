@@ -12,7 +12,16 @@ function displayError() {
 	$('nav.navbar').after(msg);
 }
 
-function saveFileboard() {
+function displayGoodSave() {
+	var text = 'You are good to go.'
+	$(".alert-dismissible").remove();
+	var msg = $('<div role="alert">').addClass('alert alert-success alert-dismissible')
+	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Fileboard Saved!</strong> ' + text);
+
+	$('nav.navbar').after(msg);
+}
+
+function saveFileboard(showAlert = false) {
 	if (!loggedIn) {
 		return;
 	}
@@ -23,8 +32,10 @@ function saveFileboard() {
 	}
 
 	$.post('api.php', data, function (d) {
-		console.log(d);
-	});
+		if(showAlert === true) {
+			displayGoodSave();
+		}
+	}).fail(displayError);
 }
 
 function saveNewFileboard(name) {
@@ -41,7 +52,7 @@ function saveNewFileboard(name) {
 	$.post('api.php', data, function (d) {
 		console.log(d);
 		getFileboards();
-	});
+	}).fail(displayError);
 }
 
 function getFileboards() {
@@ -133,7 +144,9 @@ $(document).ready(function() {
 		saveNewFileboard("New Board");
 	});
 
-	$('#btn-save').click(saveFileboard);
+	$('#btn-save').click(function () {
+		saveFileboard(true);
+	});
 
 	$('#btn-rename').click(function () {
 		var input = $('<input type="text" size="10">').addClass('fileboard-rename-field');

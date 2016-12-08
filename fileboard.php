@@ -41,6 +41,7 @@
 								echo '<li><a href="#" id="btn-save">Save</a></li>';
 								echo '<li><a href="#" id="btn-rename">Rename</a></li>';
 								echo '<li><a href="#" id="btn-delete">Delete</a></li>';
+								echo '<li><a href="help.php" id="btn-help">Help</a></li>';
 							}
 						?>
 					</ul>

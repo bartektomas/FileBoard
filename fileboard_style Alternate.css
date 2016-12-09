@@ -1,0 +1,55 @@
+html,body{
+    height: 100%
+}
+body {
+	background-image: url(grid_1.png);
+	background-repeat: repeat;
+	height: 100%
+}
+
+#canvas-div {
+	position: absolute;
+	overflow: auto;
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+	z-index: 1
+}
+
+#header-div {
+	background-color: rgb(0,200,150);
+	border-color: rgb(0,200,150);
+
+	left: 0;
+	right: 0;
+	top: 0;
+	position: fixed;
+	z-index: 2
+}
+
+#footer-div {
+	background-color: rgb(0,200,150);
+	border-color: rgb(0,200,150);
+
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	z-index: 2
+}
+
+ .btn-fileboard {
+	 margin-right: 5px;
+ }
+
+.navbar-brand {
+	color: white !important;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+}
+
+.fileboard-rename-field {
+	color: black;
+}

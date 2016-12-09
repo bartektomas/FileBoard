@@ -20,11 +20,11 @@
 
 	 ?>
 
-	<link href="fileboard_style.css" rel="stylesheet">
+	<link href="fileboard_style Alternate.css" rel="stylesheet">
 </head>
 <body>
 	<div id="header-div" class="well well-sm">
-		<nav class="navbar navbar-inverse">
+		<nav class="navbar navbar-inverse ">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -41,7 +41,6 @@
 								echo '<li><a href="#" id="btn-save">Save</a></li>';
 								echo '<li><a href="#" id="btn-rename">Rename</a></li>';
 								echo '<li><a href="#" id="btn-delete">Delete</a></li>';
-								echo '<li><a href="help.php" id="btn-help">Help</a></li>';
 							}
 						?>
 					</ul>
@@ -49,12 +48,14 @@
 					<?php
 						if (isset($_SESSION["valid"])) {
 							echo '<a class="navbar-right navbar-brand" href="logout.php">Logout</a>';
+							echo '<a class="navbar-right navbar-brand" href="help.php">Help</a>';
 							if ($_SESSION["isAdmin"]) {
 								echo '<a class="navbar-right navbar-brand" href="admin.php">Admin Panel</a>';
 							}
 						} else {
 							echo '<a class="navbar-right navbar-brand" href="login.php">Login</a>';
 							echo '<a class="navbar-right navbar-brand" href="signup.php">Signup</a>';
+							echo '<a class="navbar-right navbar-brand" href="help.php">Help</a>';
 						}
 					?>
 				</div>
@@ -77,7 +78,7 @@
 		<canvas id="canvas"></canvas>
 	</div>
 
-	<div id="footer-div" class="well well-sm">
+	<div id="footer-div" class="/*well well-sm well-fixed-bottom*/ navbar-fixed-bottom">
 		<button id="pencil" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Pencil</button>
 		<button id="text" type="button" class="btn btn-default"><span class="glyphicon glyphicon-font"></span> Text</button>
 		<button id="shapes" type="button" class="btn btn-default" data-toggle="popover" data-placement="top" title="Shape Type" data-content="" data-html=true data-trigger="manual"><span class="glyphicon glyphicon-star"></span> Shapes</button>

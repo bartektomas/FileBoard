@@ -10,7 +10,9 @@ require_once "database.php";
 
 session_start();
 
-if ($_SESSION["valid"]) {
+//header("Content-Type: application/json");
+
+if ($_SESSION["valid"] && isset($_POST["action"])) {
     if ($_POST["action"] === "saveNew") {
         $stmt = $conn->prepare("INSERT INTO `fileboards` (`userid`, `name`, `data`) VALUES (?, ?, ?)");
         if ($stmt->execute( array($_SESSION['userid'], $_POST['name'], $_POST['data']) )) {

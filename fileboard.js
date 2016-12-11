@@ -29,13 +29,14 @@ function saveFileboard(showAlert = false) {
 	if (fileboardID && fileboardName) {
 		// save
 		var data = {"action" : "save", "fileboardID" : fileboardID, "name" : fileboardName, "data" : JSON.stringify(canvas)};
+		$.post('api.php', data, function (d) {
+			if(showAlert === true) {
+				displayGoodSave();
+			}
+		}).fail(displayError);
 	}
 
-	$.post('api.php', data, function (d) {
-		if(showAlert === true) {
-			displayGoodSave();
-		}
-	}).fail(displayError);
+
 }
 
 function saveNewFileboard(name) {
@@ -119,9 +120,9 @@ function loadFileboard() {
 
 	var data = {"action" : "loadFileboard", "fileboardID" : fileboardID};
 	$.post('api.php', data, function (d) {
+		//console.log(d);
 		var json = JSON.parse(d);
-		canvas.loadFromJSON(json["data"]);
-		canvas.renderAll();
+		canvas.loadFromJSON(json["data"], canvas.renderAll.bind(canvas));
 	}).fail(displayError);
 }
 
@@ -130,6 +131,7 @@ var mode = 0;
 //mode 1: pencil
 //mode 2: text
 //mode 3: shapes
+//mode 4: image
 
 $(document).ready(function() {
 	// create new fileboard on tab click
@@ -216,6 +218,11 @@ $(document).ready(function() {
 			$("#shapes").removeClass("btn-primary");
 			$("#shapes").popover("hide");
 		}
+		else if (mode == 4) {
+			$("#image").addClass("btn-default");
+			$("#image").removeClass("btn-primary");
+			$("#image").popover("hide");
+		}
 
 		mode = newMode;
 
@@ -236,6 +243,40 @@ $(document).ready(function() {
 			$("#shapes").removeClass("btn-default");
 			$("#shapes").addClass("btn-primary");
 			$("#shapes").popover("show");
+		}
+		else if (mode == 4) {
+			$("#image").removeClass("btn-default");
+			$("#image").addClass("btn-primary");
+			$("#image").popover("show");
+			$("#imgLoader").change(function(e) {
+				var reader = new FileReader();
+		    	reader.onload = function (event) {
+					console.log('fdsf');
+			        var imgObj = new Image();
+			        imgObj.src = event.target.result;
+			        imgObj.onload = function () {
+			            // start fabricJS stuff
+			            var image = new fabric.Image(imgObj);
+			            image.set({
+			                left: 150,
+			                top: 150,
+			                angle: 0,
+			                padding: 10,
+			                cornersize: 10,
+							height: 100,
+							width: 100
+			            });
+			            //image.scale(getRandomNum(0.1, 0.25)).setCoords();
+			            canvas.add(image);
+			            // end fabricJS stuff
+						$("#imgLoader").val(null);
+						modeSwitch(0);
+
+			        }
+		    	}
+
+		    	reader.readAsDataURL(e.target.files[0]);
+			});
 		}
 	}
 
@@ -266,6 +307,16 @@ $(document).ready(function() {
 		}
 		else {
 			modeSwitch(3);
+		}
+	});
+
+	//image button
+	$("#image").on("click", function() {
+		if (mode == 4) {
+			modeSwitch(0);
+		}
+		else {
+			modeSwitch(4);
 		}
 	});
 
@@ -361,4 +412,10 @@ $(document).ready(function() {
 	</div>\
 	</form>\
 	');
+
+	$("#image").popover();
+	$("#image").attr("data-content", '<input type="file" id="imgLoader">');
+
+	// save every 20 seconds
+	setInterval(saveFileboard, 20000);
 });

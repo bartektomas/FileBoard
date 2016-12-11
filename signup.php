@@ -24,8 +24,9 @@ if (isset($_POST['createaccount'])) {
         if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             if (strlen($_POST['email']) < 100 && strlen($_POST['password']) < 200) {
                 if ($_POST['email'] === $_POST['confirmEmail'] && $_POST['password'] === $_POST['confirmPassword']) {
-                    if($stmt->execute(array($_POST['email'], $_POST['password']))) {
+                    if($stmt->execute(array($_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT)))) {
                         $_SESSION['valid'] = true;
+                        $_SESSION['isAdmin'] = false;
                         $stmt2 = $conn->prepare("SELECT `userid` FROM users WHERE email = ?");
                         $stmt2->execute(array($_POST['email']));
                         $_SESSION['userid'] = $stmt2->fetchColumn();

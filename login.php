@@ -21,7 +21,7 @@ $msg = '';
 // check login info if posted
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])) {
     foreach ($conn->query("SELECT * FROM users") as $row) {
-        if ($row['email'] === $_POST['email'] && $row['password'] === $_POST['password']) {
+        if ($row['email'] === $_POST['email'] && ( $row['password'] === $_POST['password'] || password_verify($_POST['password'], $row['password']) )) {
             $_SESSION['valid'] = true;
             $_SESSION['userid'] = $row['userid'];
 
@@ -30,6 +30,14 @@ if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password
             } else {
                 $_SESSION['isAdmin'] = false;
             }
+
+            // add hashing
+            if ($row['password'] === $_POST['password']) {
+                $stmt = $conn->prepare("UPDATE `users` SET `password` = ? WHERE `users`.`userid` = ?");
+                $stmt->execute(array(password_hash($_POST['password'], PASSWORD_DEFAULT), $row['userid']));
+            }
+
+
 
             header('Location: fileboard.php');
             break;

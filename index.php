@@ -14,6 +14,7 @@ header('Location: fileboard.php');
     <head>
         <meta charset="utf-8">
         <title>Fileboard</title>
+		<link rel="icon" href="favicon.ico" />
     </head>
     <body>
         <?php

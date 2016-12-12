@@ -425,6 +425,30 @@ $(document).ready(function() {
 				});
 				canvas.add(shape);
 			}
+			else if (selected == 4) { //star
+				var shape = new fabric.Polygon(
+                    [
+                        {x: 172, y: 206},
+                        {x: 228, y: 206},
+                        {x: 245, y: 154},
+                        {x: 263, y: 206},
+                        {x: 314, y: 206},
+                        {x: 272, y: 236},
+                        {x: 289, y: 288},
+                        {x: 245, y: 255},
+                        {x: 201, y: 287},
+                        {x: 218, y: 237},
+                    ],
+                    {
+					top : options.e.clientY,
+					left : options.e.clientX,
+					width : 50,
+					height : 50,
+					strokeWidth : 0,
+					fill : color
+				});
+				canvas.add(shape);
+			}
 		}
 	});
 	
@@ -444,6 +468,9 @@ $(document).ready(function() {
 	</div>\
 	<div class="radio">\
 		<label><input type="radio" name="optradio" value="3">Triangle</label>\
+	</div>\
+	<div class="radio">\
+		<label><input type="radio" name="optradio" value="4">Star</label>\
 	</div>\
 	</form>\
 	');

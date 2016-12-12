@@ -90,7 +90,7 @@ function getFileboards() {
 			})(json, i)
 		}
 		if (numBoards == 0) {
-			saveNewFileboard("Board " + String(numBoards+1));
+			saveNewFileboard("New Board");
 		}
 	}).fail(displayError);
 }

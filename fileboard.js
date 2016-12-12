@@ -126,6 +126,25 @@ function loadFileboard() {
 	}).fail(displayError);
 }
 
+var color = "#000000";
+function changeColor(jscolor) {
+	color = "#" + jscolor;
+	canvas.freeDrawingBrush.color = color;
+	if (canvas.getActiveObject()) {
+		if (typeof canvas.getActiveObject().fill === "string") {
+			canvas.getActiveObject().fill = color;
+		}
+	}
+	if (canvas.getActiveGroup()) {
+		$.each(canvas.getActiveGroup().getObjects(), function(key, value) {
+			if (typeof value.fill === "string") {
+				value.fill = color;
+			}
+		});
+	}
+	canvas.renderAll();
+}
+
 var mode = 0;
 //mode 0: none (edit)
 //mode 1: pencil
@@ -196,6 +215,15 @@ $(document).ready(function() {
 			canvas.setHeight(currentCanvasHeight+50);
 			$("canvas-div").scrollTop(e.target.top);
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
+		}
+	});
+	
+	//set color to color of selected object
+	canvas.on("object:selected", function(e) {
+		if (canvas.getActiveObject()) {
+			if (typeof canvas.getActiveObject().fill === "string") {
+				$("#color")[0].jscolor.fromString(canvas.getActiveObject().fill);
+			}
 		}
 	});
 
@@ -376,7 +404,8 @@ $(document).ready(function() {
 					left : options.e.clientX,
 					width : 50,
 					height : 50,
-					strokeWidth : 0
+					strokeWidth : 0,
+					fill : color
 				});
 				canvas.add(shape);
 			}
@@ -385,7 +414,8 @@ $(document).ready(function() {
 					top : options.e.clientY,
 					left : options.e.clientX,
 					radius : 25,
-					strokeWidth : 0
+					strokeWidth : 0,
+					fill : color
 				});
 				canvas.add(shape);
 			}
@@ -395,13 +425,14 @@ $(document).ready(function() {
 					left : options.e.clientX,
 					width : 50,
 					height : 50,
-					strokeWidth : 0
+					strokeWidth : 0,
+					fill : color
 				});
 				canvas.add(shape);
 			}
 		}
 	});
-
+	
 	//initialize canvas to window size
 	canvas.setHeight(window.innerHeight);
 	canvas.setWidth(window.innerWidth);

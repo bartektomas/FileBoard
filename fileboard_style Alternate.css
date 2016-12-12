@@ -1,10 +1,10 @@
 html,body{
-    height: 100%
+    height: 100%;
 }
 body {
 	background-image: url(grid_1.png);
 	background-repeat: repeat;
-	height: 100%
+	height: 100%;
 }
 
 #canvas-div {
@@ -13,7 +13,7 @@ body {
 	max-width: 100%;
 	max-height: 100%;
 	display: block;
-	z-index: 1
+	z-index: 1;
 }
 
 #header-div {
@@ -24,7 +24,7 @@ body {
 	right: 0;
 	top: 0;
 	position: fixed;
-	z-index: 2
+	z-index: 2;
 }
 
 #footer-div {
@@ -35,7 +35,7 @@ body {
 	right: 0;
 	bottom: 0;
 	position: fixed;
-	z-index: 2
+	z-index: 2;
 }
 
  .btn-fileboard {

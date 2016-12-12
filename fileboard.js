@@ -323,16 +323,25 @@ $(document).ready(function() {
 	//deleting fabric objects
 	$("html").keyup(function(e) {
 		if(e.keyCode == 8 || e.keyCode == 46) {
-			if (canvas.getActiveObject() instanceof fabric.IText) {
-				if (canvas.getActiveObject().isEditing) {
-					//do nothing
+			if (canvas.getActiveObject()) {
+				if (canvas.getActiveObject() instanceof fabric.IText) {
+					if (canvas.getActiveObject().isEditing) {
+						//do nothing
+					}
+					else {
+						canvas.remove(canvas.getActiveObject());
+					}
 				}
 				else {
 					canvas.remove(canvas.getActiveObject());
 				}
 			}
-			else {
-				canvas.remove(canvas.getActiveObject());
+			if (canvas.getActiveGroup()) {
+				$.each(canvas.getActiveGroup().getObjects(), function(key, value) {
+					canvas.remove(value);
+				});
+				canvas.deactivateAll();
+				canvas.renderAll();
 			}
 		}
 	});

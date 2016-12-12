@@ -280,30 +280,25 @@ $(document).ready(function() {
 				var reader = new FileReader();
 		    	reader.onload = function (event) {
 					console.log('fdsf');
-			        var imgObj = new Image();
-			        imgObj.src = event.target.result;
-			        imgObj.onload = function () {
-			            // start fabricJS stuff
-			            var image = new fabric.Image(imgObj);
-			            image.set({
-			                left: 150,
-			                top: 150,
-			                angle: 0,
-			                padding: 10,
-			                cornersize: 10,
-							height: 100,
-							width: 100
-			            });
-			            //image.scale(getRandomNum(0.1, 0.25)).setCoords();
-			            canvas.add(image);
-			            // end fabricJS stuff
+					var imgObj = new Image();
+					imgObj.src = event.target.result;
+					imgObj.onload = function () {
+						// start fabricJS stuff
+						var image = new fabric.Image(imgObj);
+						image.set({
+							left: 150,
+							top: 150
+						});
+						//image.scale(getRandomNum(0.1, 0.25)).setCoords();
+						canvas.add(image);
+						// end fabricJS stuff
 						$("#imgLoader").val(null);
 						modeSwitch(0);
 
-			        }
-		    	}
+					}
+				}
 
-		    	reader.readAsDataURL(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
 			});
 		}
 	}

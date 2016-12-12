@@ -42,6 +42,7 @@
 								echo '<li><a href="#" id="btn-save">Save</a></li>';
 								echo '<li><a href="#" id="btn-rename">Rename</a></li>';
 								echo '<li><a href="#" id="btn-delete">Delete</a></li>';
+								echo '<li><a href="#" id="btn-download">Download</a></li>';
 							}
 						?>
 					</ul>
@@ -91,5 +92,6 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.min.js" type="text/javascript"></script>
 	<script src="jscolor-2.0.4/jscolor.min.js" type="text/javascript"></script>
 	<script src="fileboard.js" type="text/javascript"></script>
+	<a id = "download-image" download></a>
 </body>
 </html>

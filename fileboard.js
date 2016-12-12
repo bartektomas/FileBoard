@@ -191,7 +191,12 @@ $(document).ready(function() {
 	$('#btn-delete').click(function () {
 		deleteFileboard(fileboardID);
 	});
-
+    $('#btn-download').click(function () {
+        var url = canvas.toDataURL('png');
+        var contain = document.getElementById("download-image");
+        contain.setAttribute("href", url);
+        contain.click();
+	});
 	if(loggedIn) getFileboards();
 
 	canvas = new fabric.Canvas('canvas');

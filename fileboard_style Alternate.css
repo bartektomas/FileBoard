@@ -4,7 +4,7 @@ html,body{
 
 #canvas-div {
 	position: absolute;
-	overflow: auto;
+	overflow: hidden;
 	max-width: 100%;
 	max-height: 100%;
 	display: block;

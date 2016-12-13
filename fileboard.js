@@ -335,8 +335,8 @@ $(document).ready(function() {
 						// start fabricJS stuff
 						var image = new fabric.Image(imgObj);
 						image.set({
-							left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
-							top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
+							left : $("#canvas-div").scrollLeft() + 150,
+							top : $("#canvas-div").scrollTop() + 150
 						});
 						//image.scale(getRandomNum(0.1, 0.25)).setCoords();
 						canvas.add(image);

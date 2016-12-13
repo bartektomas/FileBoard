@@ -39,17 +39,20 @@ if (!empty($_POST['oldpw']) && !empty($_POST['newpw']) && !empty($_POST['cnfnewp
                     //echo $sql;
                     if($db->query($sql) === true)
                     {
-                        $msg = "Password Changed successfully.";
+                        $msg = "Password changed successfully.";
                     }
+                }
+                else{
+                    $msg = "Passwords don't match.";
                 }
             }
             else{
                 $msg = "Error Changing Password.";//echo "Broke";
             }
 
-            
-          
-    
+
+
+
     if (!isset($_SESSION['valid'])) {
         $msg = "An error occured.";
     }

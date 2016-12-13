@@ -209,7 +209,9 @@ $(document).ready(function() {
 	});
 
 	$('#btn-delete').click(function () {
-		deleteFileboard(fileboardID);
+		if (confirm("Are you sure you want to delete " + fileboardName + "?\nThis cannot be undone!")) {
+			deleteFileboard(fileboardID);
+		}
 	});
     $('#btn-download').click(function () {
         var url = canvas.toDataURL('png');

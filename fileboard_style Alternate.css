@@ -1,11 +1,6 @@
 html,body{
     height: 100%;
 }
-body {
-	background-image: url(grid_1.png);
-	background-repeat: repeat;
-	height: 100%;
-}
 
 #canvas-div {
 	position: absolute;

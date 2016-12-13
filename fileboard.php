@@ -91,7 +91,7 @@
 		<button id="file" type="button" class="btn btn-default" data-toggle="popover" data-placement="top" title="Upload File" data-content="" data-html=true data-trigger="manual"><span class="glyphicon glyphicon-file"></span> File</button>
 	</div>
 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.1/fabric.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.min.js" type="text/javascript"></script>
 	<script src="fabric.canvasex.js"></script>
 	<script src="jscolor-2.0.4/jscolor.min.js" type="text/javascript"></script>
 	<script src="fileboard.js" type="text/javascript"></script>

@@ -374,6 +374,7 @@ $(document).ready(function() {
 						left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
 						top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
 					});
+					group.lockUniScaling = true;
 
 					canvas.add(group);
 				}

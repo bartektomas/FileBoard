@@ -86,6 +86,7 @@
 		<button id="text" type="button" class="btn btn-default"><span class="glyphicon glyphicon-font"></span> Text</button>
 		<button id="shapes" type="button" class="btn btn-default" data-toggle="popover" data-placement="top" title="Shape Type" data-content="" data-html=true data-trigger="manual"><span class="glyphicon glyphicon-star"></span> Shapes</button>
 		<button id="image" type="button" class="btn btn-default" data-toggle="popover" data-placement="top" title="Upload Image" data-content="" data-html=true data-trigger="manual"><span class="glyphicon glyphicon-picture"></span> Image</button>
+		<button id="file" type="button" class="btn btn-default" data-toggle="popover" data-placement="top" title="Upload File" data-content="" data-html=true data-trigger="manual"><span class="glyphicon glyphicon-file"></span> File</button>
 	</div>
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.7/fabric.min.js" type="text/javascript"></script>

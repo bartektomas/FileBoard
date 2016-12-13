@@ -151,6 +151,7 @@ var mode = 0;
 //mode 2: text
 //mode 3: shapes
 //mode 4: image
+//mode 5: file
 
 $(document).ready(function() {
 	// create new fileboard on tab click
@@ -251,6 +252,11 @@ $(document).ready(function() {
 			$("#image").removeClass("btn-primary");
 			$("#image").popover("hide");
 		}
+		else if (mode == 5) {
+			$("#file").addClass("btn-default");
+			$("#file").removeClass("btn-primary");
+			$("#file").popover("hide");
+		}
 
 		mode = newMode;
 
@@ -301,6 +307,42 @@ $(document).ready(function() {
 				reader.readAsDataURL(e.target.files[0]);
 			});
 		}
+		else if (mode == 5) {
+			$("#file").removeClass("btn-default");
+			$("#file").addClass("btn-primary");
+			$("#file").popover("show");
+			$("#fileLoader").change(function(e) {
+				var reader = new FileReader();
+		    	reader.onload = function (event) {
+					var imgObj = new Image();
+					imgObj.src = "file_image.png";
+					imgObj.onload = function () {
+						// start fabricJS stuff
+						var image = new fabric.Image(imgObj, {
+							left : 0,
+							top : 0,
+							width : 111,
+							height : 150
+						});
+						var text = new fabric.Text(e.target.files[0].name, {
+							left : 0,
+							top : 150
+						});
+						var group = new fabric.Group([ image, text ], {
+							left : 150,
+							top : 150
+						});
+						
+						canvas.add(group);
+						
+						$("#fileLoader").val(null);
+						modeSwitch(0);
+					}
+				}
+
+				reader.readAsDataURL(e.target.files[0]);
+			});
+		}
 	}
 
 	//pencil button
@@ -340,6 +382,16 @@ $(document).ready(function() {
 		}
 		else {
 			modeSwitch(4);
+		}
+	});
+
+	//file button
+	$("#file").on("click", function() {
+		if (mode == 5) {
+			modeSwitch(0);
+		}
+		else {
+			modeSwitch(5);
 		}
 	});
 
@@ -450,6 +502,12 @@ $(document).ready(function() {
 				canvas.add(shape);
 			}
 		}
+		else if (mode == 4) {
+			
+		}
+		else if (mode == 5) {
+			
+		}
 	});
 	
 	//initialize canvas to window size
@@ -477,6 +535,9 @@ $(document).ready(function() {
 
 	$("#image").popover();
 	$("#image").attr("data-content", '<input type="file" id="imgLoader">');
+
+	$("#file").popover();
+	$("#file").attr("data-content", '<input type="file" id="fileLoader">');
 
 	// save every 20 seconds
 	setInterval(saveFileboard, 20000);

@@ -50,6 +50,7 @@
 					<?php
 						if (isset($_SESSION["valid"])) {
 							echo '<a class="navbar-right navbar-brand" href="logout.php">Logout</a>';
+							echo '<a class="navbar-right navbar-brand" href="settings.php">Settings</a>';
 							echo '<a class="navbar-right navbar-brand" href="help.php">Help</a>';
 							if ($_SESSION["isAdmin"]) {
 								echo '<a class="navbar-right navbar-brand" href="admin.php">Admin Panel</a>';

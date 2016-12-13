@@ -71,7 +71,6 @@ if ($_SESSION["valid"] && isset($_POST["action"])) {
 }
 
 if ($_SESSION["valid"] && $_SESSION["userid"] && !empty($_FILES)) {
-    print_r($_FILES);
     $fileName = $_FILES['file']['name'];
     $fileType = $_FILES['file']['type'];
     $fileError = $_FILES['file']['error'];
@@ -87,6 +86,5 @@ if ($_SESSION["valid"] && $_SESSION["userid"] && !empty($_FILES)) {
         move_uploaded_file($fileTempName, $path."/$fileName");
     }
 }
-
 
 ?>

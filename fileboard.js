@@ -158,7 +158,8 @@ var mode = 0;
 //mode 5: file
 
 $(document).ready(function() {
-	canvas = new fabric.Canvas('canvas');
+	//canvas = new fabric.Canvas('canvas');
+	canvas = new fabric.CanvasEx('canvas');
 
 	// create new fileboard on tab click
 	$('#fileboardAdd').click(function(event) {
@@ -210,7 +211,7 @@ $(document).ready(function() {
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
 	});
-	
+
 	/*
 	//rudimentary scaling when an object moves past right/bottom edges
 	canvas.on("object:moving", function(e) {
@@ -228,13 +229,20 @@ $(document).ready(function() {
 		}
 	});
 	*/
-	
+
 	//set color to color of selected object
 	canvas.on("object:selected", function(e) {
 		if (canvas.getActiveObject()) {
 			if (typeof canvas.getActiveObject().fill === "string") {
 				$("#color")[0].jscolor.fromString(canvas.getActiveObject().fill);
 			}
+		}
+	});
+
+	canvas.on('mouse:dblclick', function (options) {
+		console.log(options.target._objects);
+		if (options.target._objects[1]) {
+			var url = options.target._objects[1]
 		}
 	});
 
@@ -520,33 +528,33 @@ $(document).ready(function() {
 			}
 		}
 		else if (mode == 4) {
-			
+
 		}
 		else if (mode == 5) {
-			
+
 		}
 	});
-	
+
 	//initialize canvas to window size
 	//canvas.setHeight(window.innerHeight);
 	canvas.setHeight(5000);
 	//canvas.setWidth(window.innerWidth);
 	canvas.setWidth(5000);
 	canvas.renderAll();
-	
+
 	//block right mouse menu
 	$(document).contextmenu(function() {
 		return false;
 	});
-	
+
 	//mouse scrolling
 	var curDown = false,
 	curYPos = 0,
 	curXPos = 0;
-	
+
 	$(window).mousemove(function(m) {
 		if(curDown === true){
-			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - m.pageY)); 
+			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - m.pageY));
 			$("#canvas-div").scrollLeft($("#canvas-div").scrollLeft() + (curXPos - m.pageX));
 			curYPos = m.pageY;
 			curXPos = m.pageX;
@@ -564,9 +572,9 @@ $(document).ready(function() {
 	$(window).mouseup(function() {
 		curDown = false;
 	});
-	
+
 	$('#canvas-div').bind('mousewheel DOMMouseScroll', function (e) { return false; });
-	
+
 	$("#shapes").popover();
 	$("#shapes").attr("data-content", '\
 	<form id="shape-form">\

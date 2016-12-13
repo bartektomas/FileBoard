@@ -14,7 +14,7 @@
 
 	<?php
 		if (isset($_SESSION["valid"]) && $_SESSION["valid"]) {
-			echo '<script type="text/javascript">var loggedIn = true;</script>';
+			echo '<script type="text/javascript">var loggedIn = true; var userid = ' . $_SESSION["userid"] . '</script>';
 		} else {
 			echo '<script type="text/javascript">var loggedIn = false;</script>';
 		}
@@ -91,6 +91,7 @@
 	</div>
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.1/fabric.js" type="text/javascript"></script>
+	<script src="fabric.canvasex.js"></script>
 	<script src="jscolor-2.0.4/jscolor.min.js" type="text/javascript"></script>
 	<script src="fileboard.js" type="text/javascript"></script>
 	<a id = "download-image" download></a>

@@ -25,7 +25,7 @@ function displayDownload(link) {
 	var text = 'Click here to download.'
 	$(".alert-dismissible").remove();
 	var msg = $('<div role="alert">').addClass('alert alert-info alert-dismissible')
-	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Do you want to download file?</strong> <a href="' + link + '" target="_blank" class="alert-link" download>'+ text + '</a>');
+	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Do you want to download file?</strong> <a href="' + link + '" target="_blank" class="alert-link">'+ text + '</a>');
 
 	$('nav.navbar').after(msg);
 

@@ -21,6 +21,19 @@ function displayGoodSave() {
 	$('nav.navbar').after(msg);
 }
 
+function displayDownload(link) {
+	var text = 'Click here to download.'
+	$(".alert-dismissible").remove();
+	var msg = $('<div role="alert">').addClass('alert alert-info alert-dismissible')
+	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Do you want to download file?</strong> <a href="' + link + '" target="_blank" class="alert-link">'+ text + '</a>');
+
+	$('nav.navbar').after(msg);
+
+	$(".alert-dismissible a").click(function(event) {
+		$(".alert-dismissible").remove();
+	});
+}
+
 function saveFileboard(showAlert = false) {
 	if (!loggedIn) {
 		return;
@@ -240,9 +253,12 @@ $(document).ready(function() {
 	});
 
 	canvas.on('mouse:dblclick', function (options) {
-		console.log(options.target._objects);
+		//console.log(options.target._objects);
 		if (options.target._objects[1]) {
-			var url = options.target._objects[1]
+			var fileName = options.target._objects[1].text;
+			var path = "userfiles/" + String(userid) + "/" + fileName;
+			console.log(path);
+			displayDownload(path);
 		}
 	});
 

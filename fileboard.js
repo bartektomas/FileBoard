@@ -440,8 +440,8 @@ $(document).ready(function() {
 		else if (mode == 2) {
 			modeSwitch(0);
 			var iText = new fabric.IText("",{
-				top : options.e.clientY,
-				left : options.e.clientX,
+				top : options.e.layerY,
+				left : options.e.layerX,
 				width : 50,
 				height : 50,
 				strokeWidth : 0
@@ -456,8 +456,8 @@ $(document).ready(function() {
 
 			if (selected == 1) { //rectangle
 				var shape = new fabric.Rect({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,
@@ -467,8 +467,8 @@ $(document).ready(function() {
 			}
 			else if (selected == 2) { //circle
 				var shape = new fabric.Circle({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					radius : 25,
 					strokeWidth : 0,
 					fill : color
@@ -477,8 +477,8 @@ $(document).ready(function() {
 			}
 			else if (selected == 3) { //triangle
 				var shape = new fabric.Triangle({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,
@@ -501,8 +501,8 @@ $(document).ready(function() {
                         {x: 218, y: 237},
                     ],
                     {
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,

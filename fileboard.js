@@ -335,8 +335,8 @@ $(document).ready(function() {
 						// start fabricJS stuff
 						var image = new fabric.Image(imgObj);
 						image.set({
-							left: 150,
-							top: 150
+							left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
+							top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
 						});
 						//image.scale(getRandomNum(0.1, 0.25)).setCoords();
 						canvas.add(image);
@@ -369,8 +369,8 @@ $(document).ready(function() {
 					top : 150
 				});
 				var group = new fabric.Group([ image, text ], {
-					left : 150,
-					top : 150
+					left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
+					top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
 				});
 
 				canvas.add(group);

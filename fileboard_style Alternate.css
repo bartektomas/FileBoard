@@ -1,15 +1,10 @@
 html,body{
     height: 100%;
 }
-body {
-	background-image: url(grid_1.png);
-	background-repeat: repeat;
-	height: 100%;
-}
 
 #canvas-div {
 	position: absolute;
-	overflow: auto;
+	overflow: hidden;
 	max-width: 100%;
 	max-height: 100%;
 	display: block;

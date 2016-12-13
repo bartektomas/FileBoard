@@ -1,8 +1,3 @@
-body {
-	background-image: url(grid_1.png);
-	background-repeat: repeat;
-}
-
 #canvas-div {
 	position: absolute;
 	overflow: auto;

@@ -21,6 +21,19 @@ function displayGoodSave() {
 	$('nav.navbar').after(msg);
 }
 
+function displayDownload(link) {
+	var text = 'Click here to download.'
+	$(".alert-dismissible").remove();
+	var msg = $('<div role="alert">').addClass('alert alert-info alert-dismissible')
+	.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Do you want to download file?</strong> <a href="' + link + '" target="_blank" class="alert-link">'+ text + '</a>');
+
+	$('nav.navbar').after(msg);
+
+	$(".alert-dismissible a").click(function(event) {
+		$(".alert-dismissible").remove();
+	});
+}
+
 function saveFileboard(showAlert = false) {
 	if (!loggedIn) {
 		return;
@@ -122,7 +135,11 @@ function loadFileboard() {
 	$.post('api.php', data, function (d) {
 		//console.log(d);
 		var json = JSON.parse(d);
+
 		canvas.loadFromJSON(json["data"], canvas.renderAll.bind(canvas));
+		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+			canvas.renderAll();
+		});
 	}).fail(displayError);
 }
 
@@ -154,14 +171,16 @@ var mode = 0;
 //mode 5: file
 
 $(document).ready(function() {
+	//canvas = new fabric.Canvas('canvas');
+	canvas = new fabric.CanvasEx('canvas');
+
 	// create new fileboard on tab click
 	$('#fileboardAdd').click(function(event) {
 		saveFileboard();
 		canvas.clear();
-		/*canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+		canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 			canvas.renderAll();
-		});*/
-		canvas.renderAll();
+		});
 		saveNewFileboard("New Board");
 	});
 
@@ -200,14 +219,13 @@ $(document).ready(function() {
 	});
 	if(loggedIn) getFileboards();
 
-	canvas = new fabric.Canvas('canvas');
 
 	//grid background
-	// Note from Jeremy: Made this a part of the body background instead. adjusts to window resizing better
-	/*canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
+	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
-	});*/
+	});
 
+	/*
 	//rudimentary scaling when an object moves past right/bottom edges
 	canvas.on("object:moving", function(e) {
 		var currentCanvasHeight = canvas.height;
@@ -223,13 +241,24 @@ $(document).ready(function() {
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
 	});
-	
+	*/
+
 	//set color to color of selected object
 	canvas.on("object:selected", function(e) {
 		if (canvas.getActiveObject()) {
 			if (typeof canvas.getActiveObject().fill === "string") {
 				$("#color")[0].jscolor.fromString(canvas.getActiveObject().fill);
 			}
+		}
+	});
+
+	canvas.on('mouse:dblclick', function (options) {
+		//console.log(options.target._objects);
+		if (options.target._objects[1]) {
+			var fileName = options.target._objects[1].text;
+			var path = "userfiles/" + String(userid) + "/" + fileName;
+			console.log(path);
+			displayDownload(path);
 		}
 	});
 
@@ -317,35 +346,42 @@ $(document).ready(function() {
 			$("#file").addClass("btn-primary");
 			$("#file").popover("show");
 			$("#fileLoader").change(function(e) {
-				var reader = new FileReader();
-		    	reader.onload = function (event) {
-					var imgObj = new Image();
-					imgObj.src = "file_image.png";
-					imgObj.onload = function () {
-						// start fabricJS stuff
-						var image = new fabric.Image(imgObj, {
-							left : 0,
-							top : 0,
-							width : 111,
-							height : 150
-						});
-						var text = new fabric.Text(e.target.files[0].name, {
-							left : 0,
-							top : 150
-						});
-						var group = new fabric.Group([ image, text ], {
-							left : 150,
-							top : 150
-						});
-						
-						canvas.add(group);
-						
-						$("#fileLoader").val(null);
-						modeSwitch(0);
-					}
-				}
+				var imgObj = new Image();
+				imgObj.src = "file_image.png";
 
-				reader.readAsDataURL(e.target.files[0]);
+				var image = new fabric.Image(imgObj, {
+					left : 0,
+					top : 0,
+					width : 111,
+					height : 150
+				});
+				var text = new fabric.Text(e.target.files[0].name, {
+					left : 0,
+					top : 150
+				});
+				var group = new fabric.Group([ image, text ], {
+					left : 150,
+					top : 150
+				});
+
+				canvas.add(group);
+
+				var formData = new FormData();
+				formData.append('file', $('#fileLoader')[0].files[0]);
+
+				$.ajax({
+				       url : 'api.php',
+				       type : 'POST',
+				       data : formData,
+				       processData: false,  // tell jQuery not to process the data
+				       contentType: false,  // tell jQuery not to set contentType
+				       success : function(data) {
+				           console.log(data);
+				       }
+				});
+				$("#fileLoader").val(null);
+
+				modeSwitch(0);
 			});
 		}
 	}
@@ -436,8 +472,8 @@ $(document).ready(function() {
 		else if (mode == 2) {
 			modeSwitch(0);
 			var iText = new fabric.IText("",{
-				top : options.e.clientY,
-				left : options.e.clientX,
+				top : options.e.layerY,
+				left : options.e.layerX,
 				width : 50,
 				height : 50,
 				strokeWidth : 0
@@ -452,8 +488,8 @@ $(document).ready(function() {
 
 			if (selected == 1) { //rectangle
 				var shape = new fabric.Rect({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,
@@ -463,8 +499,8 @@ $(document).ready(function() {
 			}
 			else if (selected == 2) { //circle
 				var shape = new fabric.Circle({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					radius : 25,
 					strokeWidth : 0,
 					fill : color
@@ -473,8 +509,8 @@ $(document).ready(function() {
 			}
 			else if (selected == 3) { //triangle
 				var shape = new fabric.Triangle({
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,
@@ -497,8 +533,8 @@ $(document).ready(function() {
                         {x: 218, y: 237},
                     ],
                     {
-					top : options.e.clientY,
-					left : options.e.clientX,
+					top : options.e.layerY,
+					left : options.e.layerX,
 					width : 50,
 					height : 50,
 					strokeWidth : 0,
@@ -508,17 +544,52 @@ $(document).ready(function() {
 			}
 		}
 		else if (mode == 4) {
-			
+
 		}
 		else if (mode == 5) {
-			
+
 		}
 	});
-	
+
 	//initialize canvas to window size
-	canvas.setHeight(window.innerHeight);
-	canvas.setWidth(window.innerWidth);
+	//canvas.setHeight(window.innerHeight);
+	canvas.setHeight(5000);
+	//canvas.setWidth(window.innerWidth);
+	canvas.setWidth(5000);
 	canvas.renderAll();
+
+	//block right mouse menu
+	$(document).contextmenu(function() {
+		return false;
+	});
+
+	//mouse scrolling
+	var curDown = false,
+	curYPos = 0,
+	curXPos = 0;
+
+	$(window).mousemove(function(m) {
+		if(curDown === true){
+			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - m.pageY));
+			$("#canvas-div").scrollLeft($("#canvas-div").scrollLeft() + (curXPos - m.pageX));
+			curYPos = m.pageY;
+			curXPos = m.pageX;
+		}
+	});
+
+	$(window).mousedown(function(m) {
+		if (m.button == 2) {
+			curDown = true;
+			curYPos = m.pageY;
+			curXPos = m.pageX;
+		}
+	});
+
+	$(window).mouseup(function() {
+		curDown = false;
+	});
+
+	$('#canvas-div').bind('mousewheel DOMMouseScroll', function (e) { return false; });
 
 	$("#shapes").popover();
 	$("#shapes").attr("data-content", '\

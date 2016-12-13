@@ -70,5 +70,21 @@ if ($_SESSION["valid"] && isset($_POST["action"])) {
 
 }
 
+if ($_SESSION["valid"] && $_SESSION["userid"] && !empty($_FILES)) {
+    $fileName = $_FILES['file']['name'];
+    $fileType = $_FILES['file']['type'];
+    $fileError = $_FILES['file']['error'];
+    $fileTempName = $_FILES['file']['tmp_name'];
+
+    $userid = $_SESSION['userid'];
+
+    if($fileError == UPLOAD_ERR_OK){
+        $path = $_SERVER["DOCUMENT_ROOT"] . dirname($_SERVER['PHP_SELF']) . "/userfiles/$userid";
+        if ( ! is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        move_uploaded_file($fileTempName, $path."/$fileName");
+    }
+}
 
 ?>

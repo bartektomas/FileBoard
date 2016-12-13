@@ -112,7 +112,8 @@ function deleteFileboard(idToDelete) {
 	if (!loggedIn) {
 		return;
 	}
-
+	
+	canvas.clear();
 	var data = {"action" : "deleteFileboard", "fileboardID" : idToDelete};
 	$.post('api.php', data, getFileboards).fail(displayError);
 }

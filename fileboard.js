@@ -525,7 +525,40 @@ $(document).ready(function() {
 	//canvas.setWidth(window.innerWidth);
 	canvas.setWidth(5000);
 	canvas.renderAll();
+	
+	//block right mouse menu
+	$(document).contextmenu(function() {
+		return false;
+	});
+	
+	//mouse scrolling
+	var curDown = false,
+	curYPos = 0,
+	curXPos = 0;
+	
+	$(window).mousemove(function(m) {
+		if(curDown === true){
+			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - m.pageY)); 
+			$("#canvas-div").scrollLeft($("#canvas-div").scrollLeft() + (curXPos - m.pageX));
+			curYPos = m.pageY;
+			curXPos = m.pageX;
+		}
+	});
 
+	$(window).mousedown(function(m) {
+		if (m.button == 2) {
+			curDown = true;
+			curYPos = m.pageY;
+			curXPos = m.pageX;
+		}
+	});
+
+	$(window).mouseup(function() {
+		curDown = false;
+	});
+	
+	$('#canvas-div').bind('mousewheel DOMMouseScroll', function (e) { return false; });
+	
 	$("#shapes").popover();
 	$("#shapes").attr("data-content", '\
 	<form id="shape-form">\

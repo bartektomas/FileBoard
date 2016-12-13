@@ -357,24 +357,25 @@ $(document).ready(function() {
 			$("#fileLoader").change(function(e) {
 				var imgObj = new Image();
 				imgObj.src = "file_image.png";
+				var name = e.target.files[0].name
+				imgObj.onload = function () {
+					var image = new fabric.Image(imgObj, {
+						left : 0,
+						top : 0,
+						width : 111,
+						height : 150
+					});
+					var text = new fabric.Text(name, {
+						left : 0,
+						top : 150
+					});
+					var group = new fabric.Group([ image, text ], {
+						left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
+						top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
+					});
 
-				var image = new fabric.Image(imgObj, {
-					left : 0,
-					top : 0,
-					width : 111,
-					height : 150
-				});
-				var text = new fabric.Text(e.target.files[0].name, {
-					left : 0,
-					top : 150
-				});
-				var group = new fabric.Group([ image, text ], {
-					left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),
-					top : $("#canvas-div").scrollTop() + (window.innerHeight / 2)
-				});
-
-				canvas.add(group);
-
+					canvas.add(group);
+				}
 				var formData = new FormData();
 				formData.append('file', $('#fileLoader')[0].files[0]);
 

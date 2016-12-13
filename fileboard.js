@@ -367,7 +367,8 @@ $(document).ready(function() {
 					});
 					var text = new fabric.Text(name, {
 						left : 0,
-						top : 150
+						top : 150,
+						fontSize : 16
 					});
 					var group = new fabric.Group([ image, text ], {
 						left : $("#canvas-div").scrollLeft() + (window.innerWidth / 2),

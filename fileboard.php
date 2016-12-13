@@ -21,7 +21,7 @@
 
 	 ?>
 
-	<link href="fileboard_style Alternate.css" rel="stylesheet">
+	<link href="fileboard_style.css" rel="stylesheet">
 </head>
 <body>
 	<div id="header-div" class="well well-sm">

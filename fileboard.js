@@ -209,7 +209,8 @@ $(document).ready(function() {
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
 		canvas.renderAll();
 	});
-
+	
+	/*
 	//rudimentary scaling when an object moves past right/bottom edges
 	canvas.on("object:moving", function(e) {
 		var currentCanvasHeight = canvas.height;
@@ -225,6 +226,7 @@ $(document).ready(function() {
 			$("canvas-div").on("scroll", canvas.calcOffset.bind(canvas));
 		}
 	});
+	*/
 	
 	//set color to color of selected object
 	canvas.on("object:selected", function(e) {
@@ -518,8 +520,10 @@ $(document).ready(function() {
 	});
 	
 	//initialize canvas to window size
-	canvas.setHeight(window.innerHeight);
-	canvas.setWidth(window.innerWidth);
+	//canvas.setHeight(window.innerHeight);
+	canvas.setHeight(5000);
+	//canvas.setWidth(window.innerWidth);
+	canvas.setWidth(5000);
 	canvas.renderAll();
 
 	$("#shapes").popover();

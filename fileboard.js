@@ -568,33 +568,36 @@ $(document).ready(function() {
 	canvas.renderAll();
 
 	//block right mouse menu
+	/*
 	$(document).contextmenu(function() {
 		return false;
 	});
+	*/
+	canvas.stopContextMenu = true;
 
 	//mouse scrolling
 	var curDown = false,
 	curYPos = 0,
 	curXPos = 0;
 
-	$(window).mousemove(function(m) {
+	canvas.on("mouse:move", function(options) {
 		if(curDown === true){
-			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - m.pageY));
-			$("#canvas-div").scrollLeft($("#canvas-div").scrollLeft() + (curXPos - m.pageX));
-			curYPos = m.pageY;
-			curXPos = m.pageX;
+			$("#canvas-div").scrollTop($("#canvas-div").scrollTop() + (curYPos - options.e.pageY));
+			$("#canvas-div").scrollLeft($("#canvas-div").scrollLeft() + (curXPos - options.e.pageX));
+			curYPos = options.e.pageY;
+			curXPos = options.e.pageX;
 		}
 	});
 
-	$(window).mousedown(function(m) {
-		if (m.button == 2) {
+	canvas.on("mouse:down", function(options) {
+		if (options.e.which == 3) {
 			curDown = true;
-			curYPos = m.pageY;
-			curXPos = m.pageX;
+			curYPos = options.e.pageY;
+			curXPos = options.e.pageX;
 		}
 	});
 
-	$(window).mouseup(function() {
+	canvas.on("mouse:up", function() {
 		curDown = false;
 	});
 

@@ -158,6 +158,8 @@ var mode = 0;
 //mode 5: file
 
 $(document).ready(function() {
+	canvas = new fabric.Canvas('canvas');
+
 	// create new fileboard on tab click
 	$('#fileboardAdd').click(function(event) {
 		saveFileboard();
@@ -203,7 +205,6 @@ $(document).ready(function() {
 	});
 	if(loggedIn) getFileboards();
 
-	canvas = new fabric.Canvas('canvas');
 
 	//grid background
 	canvas.setBackgroundColor({source: "grid_1.png", repeat: 'repeat'}, function () {
@@ -321,35 +322,42 @@ $(document).ready(function() {
 			$("#file").addClass("btn-primary");
 			$("#file").popover("show");
 			$("#fileLoader").change(function(e) {
-				var reader = new FileReader();
-		    	reader.onload = function (event) {
-					var imgObj = new Image();
-					imgObj.src = "file_image.png";
-					imgObj.onload = function () {
-						// start fabricJS stuff
-						var image = new fabric.Image(imgObj, {
-							left : 0,
-							top : 0,
-							width : 111,
-							height : 150
-						});
-						var text = new fabric.Text(e.target.files[0].name, {
-							left : 0,
-							top : 150
-						});
-						var group = new fabric.Group([ image, text ], {
-							left : 150,
-							top : 150
-						});
-						
-						canvas.add(group);
-						
-						$("#fileLoader").val(null);
-						modeSwitch(0);
-					}
-				}
+				var imgObj = new Image();
+				imgObj.src = "file_image.png";
 
-				reader.readAsDataURL(e.target.files[0]);
+				var image = new fabric.Image(imgObj, {
+					left : 0,
+					top : 0,
+					width : 111,
+					height : 150
+				});
+				var text = new fabric.Text(e.target.files[0].name, {
+					left : 0,
+					top : 150
+				});
+				var group = new fabric.Group([ image, text ], {
+					left : 150,
+					top : 150
+				});
+
+				canvas.add(group);
+
+				var formData = new FormData();
+				formData.append('file', $('#fileLoader')[0].files[0]);
+
+				$.ajax({
+				       url : 'api.php',
+				       type : 'POST',
+				       data : formData,
+				       processData: false,  // tell jQuery not to process the data
+				       contentType: false,  // tell jQuery not to set contentType
+				       success : function(data) {
+				           console.log(data);
+				       }
+				});
+				$("#fileLoader").val(null);
+
+				modeSwitch(0);
 			});
 		}
 	}

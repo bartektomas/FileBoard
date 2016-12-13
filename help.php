@@ -25,6 +25,8 @@
                     <a href = "#drawing-heading"><li>Drawing on the board</li></a>
                     <a href = "#adding-text-heading"><li>Adding text to the board</li></a>
                     <a href = "#adding-shape-heading"><li>Adding a shape to the board</li></a>
+                    <a href = "#adding-image-heading"><li>Adding an image to the board</li></a>
+                    <a href = "#adding-file-heading"><li>Adding a file to the board</li></a>
                 </ul>
 
 
@@ -110,7 +112,7 @@
                     <div class="col-xs-1">
                     </div>
                     <div class="col-xs-10">
-                        <img src = "Images/shape 1.jpg" alt = "Selecting text button" class = "img-responsive center-block">
+                        <img src = "Images/shape 1.jpg" alt = "Selecting the shape button" class = "img-responsive center-block">
                     </div>
                     <div class="col-xs-1">
                     </div>
@@ -123,7 +125,7 @@
                     <div class="col-xs-1">
                     </div>
                     <div class="col-xs-10">
-                        <img src = "Images/shape 2.jpg" alt = "cursor positioned" class = "img-responsive center-block">
+                        <img src = "Images/shape 2.jpg" alt = "Selecting shape type" class = "img-responsive center-block">
                     </div>
                     <div class="col-xs-1">
                     </div>
@@ -136,11 +138,95 @@
                     <div class="col-xs-1">
                     </div>
                     <div class="col-xs-10">
-                        <img src = "Images/shape 3.jpg" alt = "typing" class = "img-responsive center-block">
+                        <img src = "Images/shape 3.jpg" alt = "Clicking on canvas, and shapes appear" class = "img-responsive center-block">
                     </div>
                     <div class="col-xs-1">
                     </div>
                 </div>
+                <h2 id = "adding-image-heading">
+                        Adding an image to the board:
+                </h2>
+                <p>
+                    Step 1:
+                    Click on the image button.
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/image 1.jpg" alt = "Selecting the image button" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <p>
+                    Step 2:
+                    Click choose file
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/image 2.jpg" alt = "Clicking choose file" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <p>
+                    Step 3:
+                    Choose file
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/image 3.jpg" alt = "Choosing image" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <h2 id = "adding-file-heading">
+                        Adding a file to the board:
+                </h2>
+                <p>
+                    Step 1:
+                    Click on the file button.
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/file 1.jpg" alt = "Selecting the file button" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <p>
+                    Step 2:
+                    Click choose file
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/file 2.jpg" alt = "Clicking choose file" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>
+                <p>
+                    Step 3:
+                    Choose file
+                </p>
+                <div class="row">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-10">
+                        <img src = "Images/file 3.jpg" alt = "Choosing file" class = "img-responsive center-block">
+                    </div>
+                    <div class="col-xs-1">
+                    </div>
+                </div>                
             </div>
             <div class="col-sm-1">
             </div>
